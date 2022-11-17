@@ -4,8 +4,8 @@ import { Collection } from "@types";
 
 interface Props {
   selected: Collection;
-  handleToggle: () => void;
-  handleTextInput: () => void;
+  handleToggle: (value: boolean) => void;
+  handleTextInput: (value: string) => void;
   handleClick: () => void;
 }
 
@@ -17,7 +17,7 @@ const DownloadView: FC<Props> = (props: Props) => {
       {/* form */}
       <div className="flex flex-col gap-2 mt-8">
         <CheckBox label="Show Logo" handleToggle={handleToggle} />
-        <TextInput supply={selected} handleInput={handleTextInput} />
+        <TextInput handleInput={handleTextInput} />
         <div className="lg: mt-10">
           <Button label="Download" handleClick={handleClick} />
         </div>

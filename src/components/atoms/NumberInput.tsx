@@ -1,9 +1,9 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC } from "react";
 import debounce from "lodash.debounce";
 
 interface Props {
   supply: number;
-  handleInput: Dispatch<SetStateAction<number>>;
+  handleInput: (number: number) => void;
 }
 
 const NumberInput: FC<Props> = (props: Props) => {

@@ -1,7 +1,7 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 interface Props {
-  handleInput: Dispatch<SetStateAction<string>>;
+  handleInput: (value: string) => void;
 }
 
 const NumberInput: FC<Props> = (props: Props) => {

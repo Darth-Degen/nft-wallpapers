@@ -17,7 +17,7 @@ interface Steps {
 }
 interface Labels {
   step: number;
-  label: string | number;
+  label: string;
 }
 
 const Home: NextPage = () => {
@@ -59,8 +59,8 @@ const Home: NextPage = () => {
     increment(3);
   };
 
-  const addText = (number: number) => {
-    console.log("addText ", number);
+  const addText = (value: string) => {
+    console.log("addText ", value);
   };
 
   const download = () => {
@@ -104,7 +104,9 @@ const Home: NextPage = () => {
             current={steps.current}
             previous={steps.previous}
           >
-            <NumberInput supply={selected?.supply} handleInput={enterId} />
+            {selected?.supply && (
+              <NumberInput supply={selected?.supply} handleInput={enterId} />
+            )}
           </StepContainer>
           {/* step 3 - download image */}
           <StepContainer
@@ -112,12 +114,14 @@ const Home: NextPage = () => {
             current={steps.current}
             previous={steps.previous}
           >
-            <DownloadView
-              selected={selected}
-              handleToggle={toggleLogo}
-              handleTextInput={addText}
-              handleClick={download}
-            />
+            {selected && (
+              <DownloadView
+                selected={selected}
+                handleToggle={toggleLogo}
+                handleTextInput={addText}
+                handleClick={download}
+              />
+            )}
           </StepContainer>
         </>
       )}

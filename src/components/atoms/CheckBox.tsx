@@ -1,8 +1,8 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface Props {
   label: string;
-  handleToggle: Dispatch<SetStateAction<boolean>>;
+  handleToggle: (value: boolean) => void;
 }
 
 const CheckBox: FC<Props> = (props: Props) => {
