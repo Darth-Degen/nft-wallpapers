@@ -5,11 +5,12 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import { largeClickAnimation } from "@constants";
 
 const ThemeChanger: FC = () => {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const { systemTheme, theme, setTheme } = useTheme();
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const isDark = currentTheme === "dark";
+  const currentTheme: string | undefined =
+    theme === "system" ? systemTheme : theme;
+  const isDark: boolean = currentTheme === "dark";
 
   useEffect(() => {
     setMounted(true);

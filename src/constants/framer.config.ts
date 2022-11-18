@@ -5,11 +5,19 @@ export const largeClickAnimation: Variants = {
   whileHover: { scale: 1.1 },
   whileTap: { scale: 1 },
 };
-
+export const midClickAnimation: Variants = {
+  whileHover: { scale: 1.06 },
+  whileTap: { scale: 1 },
+};
 export const smallClickAnimation: Variants = {
   whileHover: { scale: 1.02 },
   whileTap: { scale: 1 },
 };
+
+//tap animations
+export const tapAnimation = {
+  whileTap: { scale: 0.97 },
+}
 
 //opacity animations
 export const exitAnimation = {

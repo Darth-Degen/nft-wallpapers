@@ -10,17 +10,17 @@ const NumberInput: FC<Props> = (props: Props) => {
   const { supply, handleInput } = props;
   const debouncer = debounce((value) => handleInput(value), 1000);
 
-  const styles = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
+  const styles: string = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
 
   //prevent keys
-  const onKeyPress = (event: React.KeyboardEvent) => {
+  const onKeyPress = (event: React.KeyboardEvent): void => {
     if (!/[0-9]/.test(event.key)) {
       event.preventDefault();
     }
   };
 
   //add max length check
-  const onInput = (event: React.FormEvent<HTMLInputElement>) => {
+  const onInput = (event: React.FormEvent<HTMLInputElement>): void => {
     if (Number((event.target as HTMLInputElement).value) > supply) {
       (event.target as HTMLInputElement).value = supply.toString();
     } else {

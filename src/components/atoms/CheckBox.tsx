@@ -9,10 +9,10 @@ const CheckBox: FC<Props> = (props: Props) => {
   const { label, handleToggle } = props;
   const [checked, setChecked] = useState<boolean>(true);
 
-  const styles = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
+  const styles: string = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
 
   //add max length check
-  const onChange = () => {
+  const onChange = (): void => {
     setChecked(!checked);
   };
 
@@ -30,6 +30,7 @@ const CheckBox: FC<Props> = (props: Props) => {
         placeholder="Add Text"
         type="checkbox"
         checked={checked}
+        className="accent-indigo-600 dark:accent-indigo-300"
       />
     </div>
   );

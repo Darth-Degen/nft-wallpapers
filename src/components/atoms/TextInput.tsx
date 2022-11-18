@@ -9,11 +9,11 @@ const NumberInput: FC<Props> = (props: Props) => {
 
   const [value, setValue] = useState<string>();
 
-  const charLim = 50;
-  const styles = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
+  const charLim: number = 30;
+  const styles: string = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
 
   //add max length check
-  const onInput = (event: React.FormEvent<HTMLInputElement>) => {
+  const onInput = (event: React.FormEvent<HTMLInputElement>): void => {
     const val = (event.target as HTMLInputElement).value;
     setValue(val);
     handleInput(val);

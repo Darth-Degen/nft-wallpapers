@@ -14,7 +14,8 @@ const StepContainer: FC<Props> = (props: Props) => {
   const { step, current, previous, children, zIndex } = props;
 
   const { systemTheme, theme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const currentTheme: string | undefined =
+    theme === "system" ? systemTheme : theme;
 
   const isCurrent: boolean = step === current;
   const isPrevious: boolean = step === previous;

@@ -14,10 +14,11 @@ const DropdownButton: FC<Props> = (props: Props) => {
 
   const { systemTheme, theme } = useTheme();
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const isDark = currentTheme === "dark";
+  const currentTheme: string | undefined =
+    theme === "system" ? systemTheme : theme;
+  const isDark: boolean = currentTheme === "dark";
 
-  const styles = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
+  const styles: string = "w-56 h-10 bg-white dark:bg-[#121212] text-sm";
 
   return (
     <button

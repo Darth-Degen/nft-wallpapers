@@ -5,16 +5,25 @@ export const collections: Collection[] = [
     id: "degods",
     name: "DeGods",
     type: "sol",
-    logo: "",
+    logo: {
+      path: 
+      "/images/logos/degods.svg", 
+      width: 90, 
+      height: 105
+    },    
     supply:10000,
-    url: "https://metadata.degods.com/g/2444.png",
+    url: "https://metadata.degods.com/g/",
     version:"dead"
   },
   {
     id: "y00ts",
     name: "y00ts",
     type: "sol",
-    logo: "y00ts.svg",
+    logo: {
+      path: "/images/logos/y00ts.svg", 
+      width:150, 
+      height: 110.6
+    },
     url: "https://metadata.y00ts.com/y/",
     supply:15000,
   },

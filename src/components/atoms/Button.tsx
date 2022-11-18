@@ -1,4 +1,6 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC } from "react";
+import { tapAnimation } from "@constants";
+import { motion } from "framer-motion";
 
 interface Props {
   label: string;
@@ -7,16 +9,17 @@ interface Props {
 
 const CheckBox: FC<Props> = (props: Props) => {
   const { label, handleClick } = props;
-  const styles =
-    "w-56 h-10 bg-[#121212] dark:bg-gray-200 text-white dark:text-black text-sm";
+  const styles: string =
+    "w-56 h-10 bg-indigo-600 dark:bg-indigo-500 text-white dark:text-white text-sm";
 
   return (
-    <button
-      className={`relative flex justify-center ${styles} border border-gray-300 rounded text-center  p-2 font-semibold`}
+    <motion.button
+      className={`relative flex justify-center ${styles} border border-gray-300 rounded text-center p-2 font-semibold hover:outline hover:outline-indigo-300 `}
       onClick={() => handleClick()}
+      {...tapAnimation}
     >
       {label}
-    </button>
+    </motion.button>
   );
 };
 

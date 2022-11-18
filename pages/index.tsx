@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     { step: 3, label: "" },
   ]);
 
-  const increment = (step: number) => {
+  const increment = (step: number): void => {
     if (step < steps.current || step === steps.current) return;
     setSteps((prevState) => ({
       previous: prevState.current,
@@ -41,7 +41,7 @@ const Home: NextPage = () => {
     }));
   };
 
-  const setCollection = (collection: Collection) => {
+  const setCollection = (collection: Collection): void => {
     setLabels((prevState) => {
       const newState = prevState.map((obj) => {
         if (obj.step === 1) return { ...obj, label: collection.name };
@@ -54,21 +54,9 @@ const Home: NextPage = () => {
     increment(2);
   };
 
-  const enterId = (number: number) => {
+  const enterId = (number: number): void => {
     setTokenId(number);
-    increment(3);
-  };
-
-  const addText = (value: string) => {
-    console.log("addText ", value);
-  };
-
-  const download = () => {
-    console.log("download ");
-  };
-
-  const toggleLogo = (value: boolean) => {
-    console.log("toggleLogo ", value);
+    if (number > 0) increment(3);
   };
 
   useEffect(() => {
@@ -115,12 +103,7 @@ const Home: NextPage = () => {
             previous={steps.previous}
           >
             {selected && (
-              <DownloadView
-                selected={selected}
-                handleToggle={toggleLogo}
-                handleTextInput={addText}
-                handleClick={download}
-              />
+              <DownloadView collection={selected} tokenId={tokenId} />
             )}
           </StepContainer>
         </>
