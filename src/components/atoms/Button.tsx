@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 import { tapAnimation } from "@constants";
 import { motion } from "framer-motion";
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   handleClick: () => void;
 }

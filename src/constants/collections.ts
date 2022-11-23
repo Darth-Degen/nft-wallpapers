@@ -28,6 +28,18 @@ export const collections: Collection[] = [
     supply:15000,
   },
   // {
+  //   id: "lily",
+  //   name: "LILY",
+  //   type: "sol",
+  //   logo: {
+  //     path: "/images/logos/y00ts.svg", 
+  //     width:150, 
+  //     height: 110.6
+  //   },
+  //   url: "https://metadata.y00ts.com/y/",
+  //   supply:15000,
+  // },
+  // {
   //   id: "lsth",
   //   name: "Liberty Square: The Hallowed",
   //   type: "sol",
