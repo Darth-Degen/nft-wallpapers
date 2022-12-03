@@ -15,7 +15,7 @@ const PageLayout: FC<Props> = (props: Props) => {
       {...enterAnimation}
     >
       <PageHead
-        title="Degen Wallpapers"
+        title="Degen Papers"
         description="Download your favoriate Solana NFTs as your phone wallpaper"
       />
       <Header />

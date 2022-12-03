@@ -10,6 +10,7 @@ import "dear-image.detect-background-color";
 //@ts-ignore
 import DearImage from "dear-image";
 import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 
 interface Props {
   collection: Collection;
@@ -35,13 +36,24 @@ const DownloadView: FC<Props> = (props: Props) => {
   const handleDownload = async () => {
     // handleLoad();
 
-    let scale = { scale: 5 };
-    const element = document.getElementById("wallpaper");
+    let scale = { scale: 10 };
+    // const element = document.getElementById("wallpaper");
+    const element = document.getElementById("inner-image");
 
     if (element) {
-      const canvas = await html2canvas(element, scale);
-      const dataURL = canvas.toDataURL("image/png");
-      download(dataURL, "degen-wallpaper.png", "image/png");
+      const canvas = await html2canvas(element, scale).then((canvas) => {
+        console.log("canvas ", canvas);
+        const dataURL = canvas.toDataURL("image/jpeg");
+        // console.log("dataURL ", dataURL);
+        download(dataURL, "degen-papers.jpeg", "image/jpeg");
+      });
+      // const dataURL = canvas.toDataURL("image/png");
+      // download(dataURL, "degen-wallpaper.png", "image/png");
+
+      //TODO:make this save to dom and then downlaod
+      // htmlToImage.toPng(wallpaper).then(function (dataUrl) {
+      //   download(dataUrl, "wallpaper.png");
+      // });
     }
   };
 
@@ -86,7 +98,7 @@ const DownloadView: FC<Props> = (props: Props) => {
         </div>
       </div>
       {/* mobile border */}
-      <div className="relative rounded-3xl h-[450px] w-[220px] outline outline-[11px] outline-[#121212] z-50">
+      <div className="relative rounded-3xl h-[562.5px] w-[275px] outline outline-[11px] outline-[#121212] z-50">
         <div className="absolute left-1/2 -translate-x-1/2 -top-1 h-5 w-20 bg-[#121212] rounded-b-lg "></div>
         {tokenId > 0 && (
           <>
@@ -125,10 +137,11 @@ const DownloadView: FC<Props> = (props: Props) => {
                 >
                   <Image
                     src={src}
-                    height={220}
-                    width={220}
+                    height={300}
+                    width={300}
                     alt="NFT"
                     className="rounded-b-3xl"
+                    id="inner-image"
                   />
                 </motion.div>
               </motion.div>

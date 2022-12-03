@@ -18,7 +18,7 @@ const Logo: FC = () => {
         />
       </svg>
       <span className="font-semibold text-2xl font-sans  whitespace-nowrap">
-        Degen Wallpapers
+        Degen Papers
       </span>
     </div>
   );
