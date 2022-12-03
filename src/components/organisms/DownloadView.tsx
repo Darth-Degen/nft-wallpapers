@@ -34,26 +34,15 @@ const DownloadView: FC<Props> = (props: Props) => {
 
   //download image
   const handleDownload = async () => {
-    // handleLoad();
-
     let scale = { scale: 10 };
-    // const element = document.getElementById("wallpaper");
-    const element = document.getElementById("inner-image");
+    const element = document.getElementById("wallpaper");
 
     if (element) {
-      const canvas = await html2canvas(element, scale).then((canvas) => {
+      await html2canvas(element, scale).then((canvas) => {
         console.log("canvas ", canvas);
         const dataURL = canvas.toDataURL("image/jpeg");
-        // console.log("dataURL ", dataURL);
         download(dataURL, "degen-papers.jpeg", "image/jpeg");
       });
-      // const dataURL = canvas.toDataURL("image/png");
-      // download(dataURL, "degen-wallpaper.png", "image/png");
-
-      //TODO:make this save to dom and then downlaod
-      // htmlToImage.toPng(wallpaper).then(function (dataUrl) {
-      //   download(dataUrl, "wallpaper.png");
-      // });
     }
   };
 

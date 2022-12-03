@@ -26,7 +26,12 @@ export const exitAnimation = {
   exit:{ opacity: 0 },
   transition:{ duration: 0.7, ease: "easeInOut" },
 }
-
+export const fastExitAnimation = {
+  initial:{ opacity: 0 },
+  animate:{ opacity: 1 },
+  exit:{ opacity: 0 },
+  transition:{ duration: 0.15, ease: "easeInOut" },
+}
 export const vFastExitAnimation = {
   initial:{ opacity: 0 },
   animate:{ opacity: 1 },

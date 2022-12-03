@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const Logo: FC = () => {
   return (
-    <div className="my-2 flex items-center gap-2 text-gray-800 dark:text-gray-200 cursor-pointer transition-colors ease-in-out duration-500">
+    <div className="my-2 flex items-center gap-2 text-gray-800 dark:text-gray-200 transition-colors ease-in-out duration-500">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -18,7 +18,7 @@ const Logo: FC = () => {
         />
       </svg>
       <span className="font-semibold text-2xl font-sans  whitespace-nowrap">
-        Degen Papers
+        Degen Wallpapers
       </span>
     </div>
   );
