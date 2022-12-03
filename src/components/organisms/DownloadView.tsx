@@ -42,20 +42,24 @@ const DownloadView: FC<Props> = (props: Props) => {
 
     if (token && wallpaper) {
       await html2canvas(token, scale).then((canvas) => {
-        tokenImage = canvas.toDataURL("image/jpeg");
+        tokenImage = canvas.toDataURL("image/png");
+        // console.log("tokenImage ", tokenImage);
+
+        download(tokenImage, "degen-wallpaper.png", "image/png");
       });
 
       await html2canvas(wallpaper, scale).then((canvas) => {
-        wallpaperImage = canvas.toDataURL("image/jpeg");
+        wallpaperImage = canvas.toDataURL("image/png");
+        console.log("wallpaperImage ", wallpaperImage);
       });
 
-      if (tokenImage && wallpaperImage) {
-        const image = await mergeImages([
-          { src: wallpaperImage },
-          { src: tokenImage, y: 1500 },
-        ]);
-        download(image, "degen-wallpaper.png", "image/png");
-      }
+      // if (tokenImage && wallpaperImage) {
+      //   const image = await mergeImages([
+      //     { src: wallpaperImage },
+      //     { src: tokenImage, y: 1500 },
+      //   ]);
+      //   download(image, "degen-wallpaper.png", "image/png");
+      // }
     }
   };
 
@@ -134,15 +138,16 @@ const DownloadView: FC<Props> = (props: Props) => {
                 </motion.div>
                 <motion.div
                   {...fastExitAnimation}
-                  className="transition-all ease-in-out duration-500 absolute bottom-0 z-0"
+                  className="transition-all ease-in-out duration-500 absolute bottom-0 rounded-b-3xl"
+                  id="token-image"
+                  style={{ backgroundColor: background }}
                 >
                   <Image
                     src={src}
-                    height={500}
-                    width={500}
+                    height={275}
+                    width={275}
                     alt="NFT"
                     className="rounded-b-3xl"
-                    id="token-image"
                   />
                 </motion.div>
               </>
