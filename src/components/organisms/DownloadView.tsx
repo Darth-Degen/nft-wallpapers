@@ -10,7 +10,7 @@ import "dear-image.detect-background-color";
 //@ts-ignore
 import DearImage from "dear-image";
 import html2canvas from "html2canvas";
-import * as htmlToImage from "html-to-image";
+import mergeImages from "merge-images";
 
 interface Props {
   collection: Collection;
@@ -22,7 +22,6 @@ const DownloadView: FC<Props> = (props: Props) => {
   const [text, setText] = useState<string>();
   const [showLogo, setShowLogo] = useState<boolean>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [colors, setColors] = useState<string[]>();
 
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -34,15 +33,29 @@ const DownloadView: FC<Props> = (props: Props) => {
 
   //download image
   const handleDownload = async () => {
-    let scale = { scale: 10 };
-    const element = document.getElementById("wallpaper");
+    const scale = { scale: 5 };
+    const wallpaper = document.getElementById("wallpaper");
+    const token = document.getElementById("token-image");
 
-    if (element) {
-      await html2canvas(element, scale).then((canvas) => {
-        console.log("canvas ", canvas);
-        const dataURL = canvas.toDataURL("image/jpeg");
-        download(dataURL, "degen-papers.jpeg", "image/jpeg");
+    let wallpaperImage;
+    let tokenImage;
+
+    if (token && wallpaper) {
+      await html2canvas(token, scale).then((canvas) => {
+        tokenImage = canvas.toDataURL("image/jpeg");
       });
+
+      await html2canvas(wallpaper, scale).then((canvas) => {
+        wallpaperImage = canvas.toDataURL("image/jpeg");
+      });
+
+      if (tokenImage && wallpaperImage) {
+        const image = await mergeImages([
+          { src: wallpaperImage },
+          { src: tokenImage, y: 1500 },
+        ]);
+        download(image, "degen-wallpaper.png", "image/png");
+      }
     }
   };
 
@@ -96,44 +109,43 @@ const DownloadView: FC<Props> = (props: Props) => {
                 <LoadAnimation />
               </motion.div>
             ) : (
-              <motion.div
-                key="wallpaper"
-                id="wallpaper"
-                className={`flex flex-col justify-between items-center h-full transition-colors ease-in-out duration-200`}
-                style={{ backgroundColor: background }}
-              >
-                <AnimatePresence exitBeforeEnter>
-                  {showLogo ? (
-                    <motion.div key="logo" {...fastExitAnimation}>
-                      <img
-                        src={collection.logo.path}
-                        height={collection.logo.height}
-                        width={collection.logo.width}
-                        alt="Logo"
-                        className="mt-16 px-6"
-                      />
-                    </motion.div>
-                  ) : (
-                    <div></div>
-                  )}
-                </AnimatePresence>
+              <>
+                <motion.div
+                  key="wallpaper"
+                  id="wallpaper"
+                  className={`flex flex-col justify-between items-center h-full transition-colors ease-in-out duration-200`}
+                  style={{ backgroundColor: background }}
+                >
+                  <motion.div key="logo" {...fastExitAnimation}>
+                    <img
+                      src={collection.logo.path}
+                      height={collection.logo.height}
+                      width={collection.logo.width}
+                      alt="Logo"
+                      className={`pt-24 px-6 ${
+                        showLogo ? "visbile" : "invisible"
+                      }`}
+                    />
+                  </motion.div>
 
-                <p className="px-5 text-black text-center font-mono">{text}</p>
-
+                  <p className="px-5 text-black text-center font-mono absolute bottom-1/2">
+                    {text}
+                  </p>
+                </motion.div>
                 <motion.div
                   {...fastExitAnimation}
-                  className="transition-all ease-in-out duration-500"
+                  className="transition-all ease-in-out duration-500 absolute bottom-0 z-0"
                 >
                   <Image
                     src={src}
-                    height={300}
-                    width={300}
+                    height={500}
+                    width={500}
                     alt="NFT"
                     className="rounded-b-3xl"
-                    id="inner-image"
+                    id="token-image"
                   />
                 </motion.div>
-              </motion.div>
+              </>
             )}
           </>
         )}
