@@ -4,13 +4,12 @@ import { Collection } from "@types";
 import { fastExitAnimation, exitAnimation } from "@constants";
 import Image from "next/image";
 // import * as htmlToImage from "html-to-image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useDragControls } from "framer-motion";
 import download from "downloadjs";
 import "dear-image.detect-background-color";
 //@ts-ignore
 import DearImage from "dear-image";
 import html2canvas from "html2canvas";
-import mergeImages from "merge-images";
 
 interface Props {
   collection: Collection;
@@ -24,42 +23,28 @@ const DownloadView: FC<Props> = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const controls = useDragControls();
 
   const [background, setBackground] = useState<string>(
     "bg-gray-100 dark:bg-indigo-00"
   );
 
-  const src = `${collection.url + (tokenId - 1)}.png`;
+  const src = `${
+    collection.url +
+    (tokenId - 1) +
+    (collection.url.includes("degods") ? "-dead" : "")
+  }.png`;
 
   //download image
   const handleDownload = async () => {
-    const scale = { scale: 5 };
-    const wallpaper = document.getElementById("wallpaper");
-    const token = document.getElementById("token-image");
+    const scale = { scale: 12 };
+    const element = document.getElementById("wallpaper");
 
-    let wallpaperImage;
-    let tokenImage;
-
-    if (token && wallpaper) {
-      await html2canvas(token, scale).then((canvas) => {
-        tokenImage = canvas.toDataURL("image/png");
-        // console.log("tokenImage ", tokenImage);
-
-        download(tokenImage, "degen-wallpaper.png", "image/png");
+    if (element) {
+      await html2canvas(element, scale).then((canvas) => {
+        const data = canvas.toDataURL("image/png");
+        download(data, "degen-wallpaper.png", "image/png");
       });
-
-      await html2canvas(wallpaper, scale).then((canvas) => {
-        wallpaperImage = canvas.toDataURL("image/png");
-        console.log("wallpaperImage ", wallpaperImage);
-      });
-
-      // if (tokenImage && wallpaperImage) {
-      //   const image = await mergeImages([
-      //     { src: wallpaperImage },
-      //     { src: tokenImage, y: 1500 },
-      //   ]);
-      //   download(image, "degen-wallpaper.png", "image/png");
-      // }
     }
   };
 
@@ -91,6 +76,14 @@ const DownloadView: FC<Props> = (props: Props) => {
     return () => clearTimeout(timeoutRef.current);
   }, [handleLoad]);
 
+  /*
+   * TODO:
+   * move code (form + "mobile border") into /molecules
+   * image error handling - if logo doesnt exist set hasLogo to false and hide
+   * image error handling - if token doesnt load set didUriLoad to false and show error message
+   * if api fails use /constants/collections
+   */
+
   return (
     <div className="flex flex-col sm:flex-row gap-10 sm:gap-20 items-center sm:items-start">
       {/* form */}
@@ -104,56 +97,65 @@ const DownloadView: FC<Props> = (props: Props) => {
         </div>
       </div>
       {/* mobile border */}
-      <div className="relative rounded-3xl h-[562.5px] w-[275px] outline outline-[11px] outline-[#121212] z-50">
-        <div className="absolute left-1/2 -translate-x-1/2 -top-1 h-5 w-20 bg-[#121212] rounded-b-lg "></div>
-        {tokenId > 0 && (
-          <>
-            {isLoading ? (
-              <motion.div key="loading" {...exitAnimation}>
-                <LoadAnimation />
-              </motion.div>
-            ) : (
-              <>
-                <motion.div
-                  key="wallpaper"
-                  id="wallpaper"
-                  className={`flex flex-col justify-between items-center h-full transition-colors ease-in-out duration-200`}
-                  style={{ backgroundColor: background }}
-                >
-                  <motion.div key="logo" {...fastExitAnimation}>
-                    <img
+      <div className="overflow-hidden p-2.5">
+        <div className="relative rounded-2xl h-[562.5px] w-[275px] ">
+          {/* mobile frame */}
+          <div className="absolute rounded-2xl h-[562.5px] w-[275px] outline outline-[11px] outline-[#121212] z-50" />
+          <div className="absolute left-1/2 -translate-x-1/2 -top-1 h-5 w-20 bg-[#121212] rounded-b-lg z-50" />
+          {tokenId > 0 && (
+            <>
+              {isLoading ? (
+                <motion.div key="loading" {...exitAnimation}>
+                  <LoadAnimation />
+                </motion.div>
+              ) : (
+                <>
+                  <motion.div
+                    key="wallpaper"
+                    id="wallpaper"
+                    className={`flex flex-col justify-end items-center h-full transition-colors ease-in-out duration-200 z-20`}
+                    style={{ backgroundColor: background }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <motion.img
                       src={collection.logo.path}
                       height={collection.logo.height}
                       width={collection.logo.width}
                       alt="Logo"
-                      className={`pt-24 px-6 ${
+                      className={`pt-24 px-6 z-50 cursor-pointer ${
                         showLogo ? "visbile" : "invisible"
                       }`}
+                      drag
+                      dragControls={controls}
                     />
+                    <motion.p
+                      className="motion.px-5 py-2 cursor-pointer text-black text-center font-mono z-50 "
+                      drag
+                      dragControls={controls}
+                    >
+                      {text}
+                    </motion.p>
+                    {/* token image */}
+                    <motion.div
+                      {...fastExitAnimation}
+                      className="transition-all ease-in-out duration-500  rounded-b-2xl"
+                      id="token-image"
+                      style={{ backgroundColor: background }}
+                    >
+                      <Image
+                        src={src}
+                        height={500}
+                        width={500}
+                        alt="NFT"
+                        className="rounded-b-2xl"
+                      />
+                    </motion.div>
                   </motion.div>
-
-                  <p className="px-5 text-black text-center font-mono absolute bottom-1/2">
-                    {text}
-                  </p>
-                </motion.div>
-                <motion.div
-                  {...fastExitAnimation}
-                  className="transition-all ease-in-out duration-500 absolute bottom-0 rounded-b-3xl"
-                  id="token-image"
-                  style={{ backgroundColor: background }}
-                >
-                  <Image
-                    src={src}
-                    height={275}
-                    width={275}
-                    alt="NFT"
-                    className="rounded-b-3xl"
-                  />
-                </motion.div>
-              </>
-            )}
-          </>
-        )}
+                </>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

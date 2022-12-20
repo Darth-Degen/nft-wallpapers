@@ -5,11 +5,11 @@ import {
   NumberInput,
   DownloadView,
 } from "@components";
-import { collections } from "@constants";
+// import { collections } from "@constants";
 import { Collection } from "@types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
-// import type { NextPage } from "next";
+import axios from "axios";
 
 interface Steps {
   previous: number;
@@ -26,6 +26,7 @@ const Home: NextPage = () => {
   const [stepHover, setStepHover] = useState<number>(0);
   const [selected, setSelected] = useState<Collection>();
   const [tokenId, setTokenId] = useState<number>(0);
+  const [collections, setCollections] = useState<Collection[]>();
 
   const [labels, setLabels] = useState<Labels[]>([
     { step: 1, label: "Select a Collection" },
@@ -66,6 +67,21 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (tokenId < 1 || !selected?.url) return;
   }, [tokenId, selected]);
+
+  // const collections = useMemo(async () => {
+  //   const response = await axios.get("http://localhost:8000/api/collections");
+  //   console.log("response ", response.data);
+  // }, []);
+
+  const getCollections = useCallback(async () => {
+    const response = await axios.get("http://localhost:8000/api/collections");
+    console.log("response.data ", response);
+    setCollections(response.data);
+  }, []);
+
+  useEffect(() => {
+    getCollections();
+  }, [getCollections]);
 
   return (
     <PageLayout>

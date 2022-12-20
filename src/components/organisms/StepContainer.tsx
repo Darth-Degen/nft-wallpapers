@@ -26,7 +26,7 @@ const StepContainer: FC<Props> = (props: Props) => {
   const startDuration: number = 2;
 
   //TODO: get height from id
-  const step3Height: number = 550;
+  const step3Height: number = 662.5;
   const yValue: number = step === 3 ? step3Height : 250;
   const delay: number =
     step === 1 ? 0 : step === 2 ? (isCurrent ? 1.5 : 0) : 1.5;

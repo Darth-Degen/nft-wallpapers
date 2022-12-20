@@ -24,7 +24,7 @@ const ThemeChanger: FC = () => {
           onClick={() => setTheme(isDark ? "light" : "dark")}
           {...(largeClickAnimation as Variants)}
         >
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             {isDark ? <SunIcon /> : <MoonIcon />}
           </AnimatePresence>
         </motion.div>

@@ -2,6 +2,7 @@
   "name": "nft-wallpapers",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://localhost:8000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,6 +15,7 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
+    "axios": "^1.2.1",
     "dear-image": "^1.4.0",
     "dear-image.detect-background-color": "^1.0.1",
     "downloadjs": "^1.4.7",

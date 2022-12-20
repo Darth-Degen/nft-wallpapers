@@ -21,7 +21,7 @@ const Dropdown: FC<Props> = (props: Props) => {
       onMouseLeave={() => handleHover(0)}
     >
       <DropdownButton isActive={show} label={label} />
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         {show && (
           <motion.div className="absolute pt-2 " {...fastExitAnimation}>
             <ul className="rounded-sm border border-gray-300 divide-y shadow max-h-[200px] overflow-y-auto">
