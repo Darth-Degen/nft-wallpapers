@@ -5,11 +5,11 @@ import {
   NumberInput,
   DownloadView,
 } from "@components";
-// import { collections } from "@constants";
+import { collections } from "@constants";
 import { Collection } from "@types";
 import { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
-import axios from "axios";
+// import axios from "axios";
 
 interface Steps {
   previous: number;
@@ -68,20 +68,15 @@ const Home: NextPage = () => {
     if (tokenId < 1 || !selected?.url) return;
   }, [tokenId, selected]);
 
-  // const collections = useMemo(async () => {
+  // const getCollections = useCallback(async () => {
   //   const response = await axios.get("http://localhost:8000/api/collections");
-  //   console.log("response ", response.data);
+  //   console.log("response.data ", response);
+  //   setCollections(response.data);
   // }, []);
 
-  const getCollections = useCallback(async () => {
-    const response = await axios.get("http://localhost:8000/api/collections");
-    console.log("response.data ", response);
-    setCollections(response.data);
-  }, []);
-
-  useEffect(() => {
-    getCollections();
-  }, [getCollections]);
+  // useEffect(() => {
+  //   getCollections();
+  // }, [getCollections]);
 
   return (
     <PageLayout>

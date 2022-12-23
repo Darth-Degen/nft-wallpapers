@@ -14,7 +14,7 @@ const Button: FC<Props> = (props: Props) => {
   return (
     <motion.div {...tapAnimation}>
       <button
-        className={`${className} relative flex justify-center ${styles} border border-gray-300 rounded text-center p-2 font-semibold ${
+        className={`${className} ${styles} relative flex justify-center border border-gray-300 rounded text-center p-2 font-semibold ${
           componentProps.disabled
             ? "cursor-not-allowed"
             : "hover:outline hover:outline-indigo-300 "
